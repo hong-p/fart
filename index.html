@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Floating Butt</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+    }
+    #butt {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      transition: transform 0.1s;
+      cursor: pointer;
+    }
+    .shake {
+      animation: shake 0.3s infinite;
+    }
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(2px, -2px); }
+      50% { transform: translate(-2px, 2px); }
+      75% { transform: translate(2px, 2px); }
+      100% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 이미지 주소는 원하는 이미지로 변경하세요 -->
+  <img id="butt" src="https://i.imgur.com/2yaf2wb.png" />
+
+  <!-- fart.mp3 파일은 동일 폴더에 있어야 합니다 -->
+  <audio id="fartSound" src="fart-1.mp3"></audio>
+
+  <script>
+    const butt = document.getElementById("butt");
+    const fartSound = document.getElementById("fartSound");
+
+    const buttWidth = 150;
+    const buttHeight = 150;
+
+    let x = Math.random() * (window.innerWidth - buttWidth);
+    let y = Math.random() * (window.innerHeight - buttHeight);
+
+    let angle = Math.random() * 2 * Math.PI;
+    let speed = 0.5 + Math.random() * 0.5;
+
+    function move() {
+      angle += (Math.random() - 0.5) * 0.1;
+
+      x += Math.cos(angle) * speed;
+      y += Math.sin(angle) * speed;
+
+      // 화면 벗어나지 않게 경계 처리
+      if (x < 0) {
+        x = 0;
+        angle = Math.PI - angle;
+      } else if (x > window.innerWidth - buttWidth) {
+        x = window.innerWidth - buttWidth;
+        angle = Math.PI - angle;
+      }
+
+      if (y < 0) {
+        y = 0;
+        angle = -angle;
+      } else if (y > window.innerHeight - buttHeight) {
+        y = window.innerHeight - buttHeight;
+        angle = -angle;
+      }
+
+      butt.style.left = `${x}px`;
+      butt.style.top = `${y}px`;
+
+      requestAnimationFrame(move);
+    }
+
+    move();
+
+    butt.addEventListener("click", () => {
+      butt.classList.add("shake");
+      fartSound.currentTime = 0;
+      fartSound.play();
+      setTimeout(() => {
+        butt.classList.remove("shake");
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
