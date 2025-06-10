@@ -39,20 +39,21 @@
     const butt = document.getElementById("butt");
     const fartSound = document.getElementById("fartSound");
 
-    const buttWidth = 150;
-    const buttHeight = 150;
+    const buttWidth = 300;
+    const buttHeight = 600;
 
     let x = Math.random() * (window.innerWidth - buttWidth);
     let y = Math.random() * (window.innerHeight - buttHeight);
 
     let angle = Math.random() * 2 * Math.PI;
-    let speed = 0.5 + Math.random() * 0.5;
+    let speed = 2.0 + Math.random() * 2.0;
 
     function move() {
       angle += (Math.random() - 0.5) * 0.1;
 
-      x += Math.cos(angle) * speed;
-      y += Math.sin(angle) * speed;
+      const speedMultiplier = 2;  // 속도 배율. 1.0 = 기본, 2.0 = 2배, 3.0 = 3배
+      x += Math.cos(angle) * speed * speedMultiplier;
+      y += Math.sin(angle) * speed * speedMultiplier;
 
       // 화면 벗어나지 않게 경계 처리
       if (x < 0) {
